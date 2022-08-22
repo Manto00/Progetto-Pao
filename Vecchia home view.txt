@@ -1,0 +1,183 @@
+#include "homeview.h"
+
+/*NOTES
+ * maye avrebbe più senso fare 5 layout verticali per ogni grafico, contenente: grafico, pulsante e descrizione.
+ * Probabilmente ridimensionerebbe meglio
+*/
+
+HomeView::HomeView(const QSize& s,View* parent) : View(s,parent)
+{
+    QVBoxLayout* mainLayout = new QVBoxLayout;
+    QHBoxLayout* descriptionLayout = new QHBoxLayout;
+    mainLayout->setSpacing(0);
+    mainLayout->setMargin(0);
+    mainLayout->addLayout(createTitleLayout(tr("Restourant manager ti permette di fare un sacco di cose ganze"), "D:/Pictures/Saved Pictures/geroglifici.jpg"));
+
+    QHBoxLayout* graficiLayout= new QHBoxLayout;
+    //creazione grafico 1
+    mainLayout->addLayout(graficiLayout);
+    BarChartView*grafico1=new BarChartView();
+    //creazione valori per la fun insert set item TEMPORANEA
+    std::list<uint> serieItems;
+    serieItems.push_back(1);
+    serieItems.push_back(2);
+    serieItems.push_back(3);
+    serieItems.push_back(1);
+    grafico1->insertSetItem("bananium", serieItems);
+    grafico1->applySetsOnChart();
+    QStringList items;
+    items.push_back("cheeseburga");
+    items.push_back("sprite");
+    items.push_back("mc&cheese");
+    items.push_back("double bacon");
+    grafico1->applyAxis(items,7);
+    graficiLayout->addWidget(grafico1);
+
+    //creazione grafico 2
+    BarChartView*grafico2=new BarChartView();
+    graficiLayout->addWidget(grafico2);
+
+    //creazione grafico 3
+    BarChartView*grafico3=new BarChartView();
+    graficiLayout->addWidget(grafico3);
+
+    //creazione grafico 4
+    BarChartView*grafico4=new BarChartView();
+    graficiLayout->addWidget(grafico4);
+
+    //creazione grafico 5
+    BarChartView*grafico5=new BarChartView();
+    graficiLayout->addWidget(grafico5);
+
+    //creazione button layout
+    mainLayout->addLayout(createButtonsLayout());
+
+
+    mainLayout->addLayout(descriptionLayout);
+
+    //aggiugnere una funzione che wrappy questa roba
+    descriptionLayout->addLayout(createGrafico1Layout(tr(
+    "Grazie a questo grafico potrai assumere un sacco di potassio\n")));
+    descriptionLayout->addLayout(createGrafico1Layout(tr(
+    "Fabio sei tu, fantastico tennista, sceso come un freesbe dal cielo\n")));
+    descriptionLayout->addLayout(createGrafico1Layout(tr(
+    "Devi sradicare i tuoi baubab, altrimenti il tuo pianeta si distrugge!")));
+    descriptionLayout->addLayout(createGrafico1Layout(tr(
+    "Il quarto grafico è tipo un grafico mega magico\n")));
+    descriptionLayout->addLayout(createGrafico1Layout(tr(
+    "Filament3dPrint è un programma che ti può aiutare a tenere\n"
+    "traccia delle stampe fatte con una Stampante 3D.\n")));
+
+
+
+
+    //Imposto il Layout alla View per essere visualizzata
+    setLayout(mainLayout);
+
+    //Connessione dei SIGNAL dei Widget al Signal della HomeView
+    connectViewSignals();
+}
+
+QLayout* HomeView::createTitleLayout(const QString& description, const QString& imgPath){
+    //Parte destra immagine e descrizione
+    QVBoxLayout* descrLayout = new QVBoxLayout;
+    //Immagine stampante descrizione
+    QLabel* img = new QLabel(this);
+    QPixmap pic = QPixmap(imgPath);
+    pic = pic.scaledToHeight(250);
+    img->setPixmap(pic);
+    img->setFixedSize(250,250);
+    descrLayout->addWidget(img,Qt::AlignHCenter);
+
+    //Descrizione
+    QLabel* title = new QLabel("Restourant Manager",this);
+    QFont font("Calibri", 20);
+    title->setFont(font);
+    title->setAlignment(Qt::AlignHCenter);
+    descrLayout->addWidget(title);
+
+    QLabel* desc = new QLabel(description,this);
+    QFont f("Calibri", 9);
+    desc->setFont(f);
+    desc->setAlignment(Qt::AlignHCenter);
+    descrLayout->addWidget(desc);
+
+    return descrLayout;
+}
+
+QLayout* HomeView::createButtonsLayout(){
+    QHBoxLayout* buttonsLayout = new QHBoxLayout;
+
+    buttonsLayout->setMargin(10);
+    buttonsLayout->setSpacing(120);
+    buttonsLayout->setContentsMargins(25,50,12,50);
+    buttonsLayout->setAlignment(Qt::AlignCenter);
+
+    piattiPButton = new QPushButton("Visualizza la frequenza degli ordini (cibo)",this);
+    bevandePButton = new QPushButton("Visualizza la frequenza degli ordini (bevande)",this);
+    asportoPButton = new QPushButton("Ordini asporto vs coperto",this);
+    permanenzaPButton = new QPushButton("Permanenza in ristorante",this);
+    guadagniPButton = new QPushButton("Anzalizza i tuoi guadagni",this);
+    piattiPButton->setFixedSize(250,50);
+    bevandePButton->setFixedSize(250,50);
+    asportoPButton->setFixedSize(250,50);
+    permanenzaPButton->setFixedSize(250,50);
+    guadagniPButton->setFixedSize(250,50);
+
+    buttonsLayout->addWidget(piattiPButton);
+    buttonsLayout->addWidget(bevandePButton);
+    buttonsLayout->addWidget(asportoPButton);
+    buttonsLayout->addWidget(permanenzaPButton);
+    buttonsLayout->addWidget(guadagniPButton);
+
+    return buttonsLayout;
+}
+
+QLayout* HomeView::createGrafico1Layout(const QString& description){
+
+    QVBoxLayout* descrLayout = new QVBoxLayout;
+    descrLayout->setContentsMargins(3, 7, 5, 7);
+
+    //Descrizione
+    QLabel* desc = new QLabel(description,this);
+    desc->setWordWrap(1);
+    //desc->setFixedWidth(300);
+    QFont f("Calibri", 9);
+    desc->setFont(f);
+    descrLayout->addWidget(desc);
+
+    QHBoxLayout* groupLayout = new QHBoxLayout;
+    groupLayout->setMargin(2);
+    groupLayout->setSpacing(2);
+    groupLayout->setContentsMargins(0, 0, 0, 0);
+
+    QGroupBox* gruppo = new QGroupBox("Grafico 1",this);
+    gruppo->setLayout(descrLayout);
+    groupLayout->addWidget(gruppo);
+
+    return groupLayout;
+}
+
+void HomeView::connectViewSignals() const{
+    connect(piattiPButton,SIGNAL(clicked()),this,SIGNAL(newProject()));
+    connect(bevandePButton,SIGNAL(clicked()),this,SIGNAL(openProject()));
+}
+
+
+void HomeView::closeEvent(QCloseEvent* event){
+    //Elaboro chiusura solo se intenzionata da evento esterno
+    if(!event->spontaneous()) return;
+
+    if(!showQuestionDialog(2,"Exit","Chiudere l'applicazione?\n")){
+        //Ignoro l'evento di chiusura
+        event->ignore();
+    } else {
+        //Accetto l'evento di chiusura della Window
+        event->accept();
+        //Emetto segnale di chiusura della View
+        emit viewClosed();
+    }
+}
+
+
+

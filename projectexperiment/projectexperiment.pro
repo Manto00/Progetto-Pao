@@ -11,6 +11,8 @@ CONFIG += c++11
 SOURCES += \
     barchartview.cpp \
     controller/controller.cpp \
+    controller/esamimodcontroller.cpp \
+    controller/introcontroller.cpp \
     controller/usercontroller.cpp \
     corso.cpp \
     esame.cpp \
@@ -20,8 +22,11 @@ SOURCES += \
     mainwindow.cpp \
     usermodel.cpp \
     controller/homecontroller.cpp \
+    view/corsopbutton.cpp \
+    view/esamiview.cpp \
     view/introview.cpp \
     view/pieview.cpp \
+    view/rowesamiview.cpp \
     view/userview.cpp \
     view/view.cpp \
     votilinechart.cpp
@@ -29,6 +34,8 @@ SOURCES += \
 HEADERS += \
     barchartview.h \
     controller/controller.h \
+    controller/esamimodcontroller.h \
+    controller/introcontroller.h \
     controller/usercontroller.h \
     corso.h \
     esame.h \
@@ -37,8 +44,11 @@ HEADERS += \
     mainwindow.h \
     usermodel.h \
     controller/homecontroller.h \
+    view/corsopbutton.h \
+    view/esamiview.h \
     view/introview.h \
     view/pieview.h \
+    view/rowesamiview.h \
     view/userview.h \
     view/view.h \
     votilinechart.h

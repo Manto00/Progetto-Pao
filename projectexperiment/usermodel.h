@@ -12,7 +12,7 @@ class usermodel
 private:
     std::vector<Corso*> corsiVector;
 
-    QString* filepath;
+    QString* filePath;
 
 public:
     Corso* getCorso(unsigned int i)const;
@@ -31,7 +31,13 @@ public:
 
     void removeEsame(int posCorso, int posizione);
 
-    const QJsonDocument & saveModel() const;
+    const QJsonDocument& toQJSonDocument() const;
+
+    const QString& getFilePath() const;
+
+    void setFilePath(const QString& path);
+
+    const QJsonDocument& saveModel() const;
 };
 
 #endif // USERMODEL_H

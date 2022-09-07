@@ -16,8 +16,19 @@ private:
     QVBoxLayout*mainLayout;
 
     virtual void connectViewSignals() const override;
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 public:
+    void setController(Controller* c) override;
+
     introView(const QSize& s= QSize(), View* parent=nullptr);
+
+signals:
+    void createNewModel();
+
+    void openUserView();
 };
 
 #endif // INTROVIEW_H

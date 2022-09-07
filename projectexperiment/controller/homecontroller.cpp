@@ -2,10 +2,14 @@
 
 homeController::homeController(HomeView*v, Controller*parent): Controller(v, nullptr, parent)
 {
-    connectViewCtrlSignalsSlots();
+    connectSlots();
 }
 
-void homeController::connectViewCtrlSignalsSlots() const{
+HomeView* homeController::getView() const {
+    return static_cast<HomeView*>(vista);
+}
+
+void homeController::connectSlots() const{
 
 }
 

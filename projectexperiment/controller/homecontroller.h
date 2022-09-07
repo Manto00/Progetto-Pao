@@ -16,12 +16,12 @@ class homeController: public Controller
 {
     Q_OBJECT
  private:
-     void connectViewCtrlSignalsSlots() const;
+     void connectSlots() const;
 
 public:
     homeController(HomeView* v, Controller* parent = nullptr);
 
-    View* getView() const;
+    HomeView* getView() const;
 
     //Model* getModel() const;
 };

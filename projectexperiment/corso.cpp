@@ -9,8 +9,14 @@ QString Corso::getnome() const {return nome;}
 
 std::vector<Esame*> Corso::getEsami() const {return esameVector;}
 
-void Corso::addEsame(Esame *nuovo){
+void Corso::addEsame(Esame* nuovo){
     esameVector.push_back(nuovo);
+}
+
+
+void Corso::modificaEsame(Esame* modificato, int posizione){
+    auto it=esameVector.begin()+posizione;
+    esameVector.emplace(it, modificato);
 }
 
 void Corso::removeEsame(int posizione){

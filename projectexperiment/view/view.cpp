@@ -47,3 +47,7 @@ bool View::showQuestionDialog(unsigned int paramNum, const QString& title,const 
     }
     return (resBtn == QMessageBox::Yes);
 }
+
+void View::setViewTitle(const QString &title){
+    setWindowTitle(title);
+}

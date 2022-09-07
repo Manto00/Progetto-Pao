@@ -1,8 +1,8 @@
 #include "esame.h"
 
-Esame::Esame(unsigned int punteggio, unsigned int app, unsigned int studente, QDate date) : voto(punteggio), appello(app), matricola(studente), data(date){}
+Esame::Esame(unsigned int studente, unsigned int punteggio, unsigned int app, QDate date) : voto(punteggio), appello(app), matricola(studente), data(date){}
 
-Esame::Esame(): voto(0), appello(0), matricola(0), data(QDate::currentDate()){}
+Esame::Esame(): voto(30), appello(0), matricola(999), data(QDate::currentDate()){}
 
 unsigned int Esame::getvoto() const{return voto;}
 

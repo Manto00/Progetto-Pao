@@ -12,7 +12,7 @@ private:
     unsigned int matricola;
     QDate data;
 public:
-    Esame(unsigned int punteggio=0, unsigned int app=0, unsigned int studente=0, QDate date=QDate::currentDate());
+    Esame( unsigned int studente=999999, unsigned int punteggio=30, unsigned int app=0, QDate date=QDate::currentDate());
     Esame();
     virtual ~Esame()=default;
     //metodi getter

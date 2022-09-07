@@ -22,7 +22,7 @@ public:
 
     static std::vector<Esame*> getEsami(QJsonDocument*data);
 
-    static bool saveAdminModel(const QJsonDocument& doc, const QString& path);
+    static bool saveUserModel(const QJsonDocument& doc, const QString& path);
 };
 
 #endif // JSONREADER_H

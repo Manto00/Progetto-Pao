@@ -38,18 +38,15 @@ public:
 
     void setWindowSize(const QSize&);
 
-
     bool showQuestionDialog(unsigned int paramNum, const QString& title,const QString& info);
-
 
     void showWarningDialog(const QString& title, const QString& mesInfo);
 
-
-
     void showInformationDialog(const QString &title, const QString &mesInfo);
 
-
     void showCriticalDialog(const QString &title, const QString &mesInfo);
+
+    void setViewTitle(const QString &title);
 
 
 signals:

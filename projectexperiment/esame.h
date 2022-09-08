@@ -35,7 +35,8 @@ private:
     unsigned int esercizi;
     bool inserted;
 public:
-    EsameScritto(unsigned int punteggio, unsigned int app, unsigned int studente, QDate date, unsigned int a=0, unsigned int c=0, unsigned int e=0);
+    EsameScritto(unsigned int studente=999999, unsigned int punteggio=30, unsigned int app=0, QDate date=QDate::currentDate(),
+                 unsigned int a=0, unsigned int c=0, unsigned int e=0);
     unsigned int getaperte() const;
     unsigned int getchiuse() const;
     unsigned int getesercizi() const;
@@ -47,7 +48,8 @@ class EsameOrale: public Esame{
 private:
     unsigned int minuti;
 public:
-    EsameOrale(unsigned int punteggio, unsigned int app, unsigned int studente, QDate date, unsigned int durata=0);
+    EsameOrale(unsigned int studente=999999, unsigned int punteggio=30, unsigned int app=0, QDate date=QDate::currentDate(),
+               unsigned int durata=0);
     virtual unsigned int getdurata() const;
 
 };

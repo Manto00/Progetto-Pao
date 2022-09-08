@@ -5,6 +5,7 @@
 #include <QSize>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <iostream>
 
 
 class Controller;
@@ -31,7 +32,7 @@ public:
 
 
     virtual ~View() {
-        setParent(nullptr);
+        /*setParent(nullptr);*/
     }
 
     virtual void setController(Controller* c);

@@ -3,41 +3,10 @@
 
 esamiModController::esamiModController(esamiView*v, usermodel* m, Controller* c, int i):Controller(v, m, c), currentCorso(i)
 {
-    currentCorso=i;
-    connectSlots(); //NON FUNZIONA
-    /*std::vector<QDate> dateVec;
-    std::vector<Esame*> esamiVec=getModel()->getCorso(currentCorso)->getEsami();
-    int infoVec[esamiVec.size()][7];
-    int j=0;
-    for(auto it=esamiVec.begin(); it!=esamiVec.end(); it++){
-        infoVec[j][0]=(*it)->getmatricola();
-        infoVec[j][1]=(*it)->getvoto();
-        infoVec[j][2]=(*it)->getappello();
-        dateVec.push_back((*it)->getdata());
-        EsameScritto* sCasted=dynamic_cast<EsameScritto*>(*it);
-        EsameOrale* oCasted=dynamic_cast<EsameOrale*>(*it);
-        if(sCasted){
-            infoVec[j][3]=sCasted->getchiuse();
-            infoVec[j][4]=sCasted->getaperte();
-            infoVec[j][5]=sCasted->getesercizi();
-            infoVec[j][6]=-1;
-        }
-        else if(oCasted){
-            infoVec[j][3]=-1;
-            infoVec[j][4]=-1;
-            infoVec[j][5]=-1;
-            infoVec[j][6]=oCasted->getdurata();
-        }
-        else{
-            infoVec[j][3]=-1;
-            infoVec[j][4]=-1;
-            infoVec[j][5]=-1;
-            infoVec[j][6]=-1;
-        }
-        j++;
-    }
-    getView()->createEsamiTable(infoVec, dateVec, esamiVec.size());*/
+    connectSlots();
 }
+
+
 
 void esamiModController::completeView() const{
     std::vector<QDate> dateVec;
@@ -83,29 +52,47 @@ usermodel* esamiModController::getModel() const {
 }
 
 //LA FUNZIONE SAVE NON VA BENE, CAMBIA L'ORDINE DEL VETTORE ---------> in teoria non  più
-void esamiModController::onSaveEsame(int esame, int mat, int vot, int app, QDate date, int chi, int ape, int ese, int dur) const{
-    if(chi!=0 || ape!=0 || ese!=0){
+void esamiModController::onSaveEsame(int esame) const{
+    int mat, vot, ape, chi, app, ese, dur;
+    QDate date=getView()->getRows()[esame]->getDate();
+    mat=getView()->getRows()[esame]->getMatricola();
+    vot=getView()->getRows()[esame]->getVoto();
+    app=getView()->getRows()[esame]->getAppello();
+    chi=getView()->getRows()[esame]->getChiuse();
+    ape=getView()->getRows()[esame]->getAperte();
+    ese=getView()->getRows()[esame]->getEsercizi();
+    dur=getView()->getRows()[esame]->getDurata();
+    if(!(chi==-1 || ape==-1 || ese==-1)){
         getModel()->getCorso(currentCorso)->modificaEsame(new EsameScritto(mat, vot, app, date, chi, ape, ese), esame);
     }
-    else if(dur!=0){
+    else if(!(dur==-1)){
         getModel()->getCorso(currentCorso)->modificaEsame(new EsameOrale(mat, vot, app, date, dur), esame);
     }
     else{
         getModel()->getCorso(currentCorso)->modificaEsame(new Esame(mat, vot, app, date), esame);
     }
+    vista->showInformationDialog("Successo", "Modifica effettuata");
 }
 
 void esamiModController::onDeleteEsame(int i) const{
-    std::cout<<"passa per il controller";
     getModel()->getCorso(currentCorso)->removeEsame(i);
     getView()->deleteRiga(i);
 }
 
 void esamiModController::connectSlots()const{
 
-    connect(vista, SIGNAL(modifyRow(int, int, int, QDate, int, int, int, int, int)), this,
-            SLOT(onSaveEsame(int, int, int, QDate, int, int, int, int, int)));
-    //connect(vista, SIGNAL(deleteRiga(int)), this, SLOT(onDeleteEsame(int)));
+    connect(vista, SIGNAL(modifyRow(int)), this, SLOT(onSaveEsame(int)));
+    connect(vista, SIGNAL(eliminaRiga(int)), this, SLOT(onDeleteEsame(int)));
+}
+
+void esamiModController::onHome(){
+    if(!vista->showQuestionDialog(3,"Torna alla home","Vuoi tornare alla schermata precedente?"))return;
+    if(vista->parent()){
+        static_cast<View*>(vista->parent())->showMaximized();
+    }
+    vista->hide();
+    delete this;
+
 }
 
 void esamiModController::onViewClosed() const{

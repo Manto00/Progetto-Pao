@@ -13,14 +13,16 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
+#include <QScrollArea>
+#include <QScrollBar>
 
 
 class userView: public View
 {
     Q_OBJECT
 private:
-    QPushButton* newModelButton;
-    QPushButton* changeModelButton;
+    QPushButton* salvaModello;
+    QPushButton* salvaCome;
     QPushButton* addCorsoButton;
     QPushButton* addEsameButton;
     QPushButton* aggiornaButton;
@@ -39,12 +41,20 @@ private:
     QHBoxLayout* activeLayout;
     QVBoxLayout* corsiLayout;
     QVBoxLayout* chartLayout;
+    QHBoxLayout* chartBaseLayout;
+    QHBoxLayout* chartSpecificiLayout;
     QVBoxLayout* fieldLayout;
     QChart* passChart;
     QChart* barChart;
     QChart* votiChart;
     QChart* durataChart;
     QChart* esChart;
+    QChartView *esChartView;
+    QChartView *passChartView;
+    QChartView *barChartView;
+    QChartView *durChartView;
+    QChartView *votiChartView;
+    QLabel*noChart;
 
 
     QLayout* createDescriptionLayout(const QString& description, const QString& imgPath);
@@ -71,17 +81,27 @@ public:
 
     void createDurataChart(std::list<unsigned int> durata);
 
-    void createEsChart(unsigned int aperte, unsigned int chiuse, unsigned int esercizi);
+    void createEsChart(float aperte, float chiuse, float esercizi);
 
     void createInsertField();
 
     std::vector<corsoPButton*> getCorsoVector();
 
-    void destroyCharts();
+    void destroyChartsBase();
+
+    void destroyChartsScritti();
+
+    void destroyChartsOrali();
 
     void addCorso(QString title);
 
     void removeCorso(int posizione);
+
+    void resetFields();
+
+    void hideDefaultLabel() const;
+
+    void showDefaultLabel() const;
 
 signals:
 
@@ -89,7 +109,7 @@ signals:
 
     void showChart() const;
 
-    void insertCorso(int) const;
+    void modCorso(int) const;
 
     void selectCorso(int) const;
 

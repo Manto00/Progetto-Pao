@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "iostream"
 
 Controller::Controller(View*v, usermodel*m, Controller*parent): QObject(parent), vista(v), modello(m)
 {
@@ -9,7 +10,8 @@ Controller::~Controller() {
     setParent(nullptr);
     for(auto child : children())
         delete child;
-    delete vista; delete modello;
+    delete vista;
+    delete modello;
 }
 
 void Controller::connectSlots()const{

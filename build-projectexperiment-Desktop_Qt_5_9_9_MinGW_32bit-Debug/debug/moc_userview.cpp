@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_userView_t {
     QByteArrayData data[7];
-    char stringdata0[68];
+    char stringdata0[65];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,13 +35,13 @@ QT_MOC_LITERAL(0, 0, 8), // "userView"
 QT_MOC_LITERAL(1, 9, 11), // "insertEsame"
 QT_MOC_LITERAL(2, 21, 0), // ""
 QT_MOC_LITERAL(3, 22, 9), // "showChart"
-QT_MOC_LITERAL(4, 32, 11), // "insertCorso"
-QT_MOC_LITERAL(5, 44, 11), // "selectCorso"
-QT_MOC_LITERAL(6, 56, 11) // "deleteCorso"
+QT_MOC_LITERAL(4, 32, 8), // "modCorso"
+QT_MOC_LITERAL(5, 41, 11), // "selectCorso"
+QT_MOC_LITERAL(6, 53, 11) // "deleteCorso"
 
     },
     "userView\0insertEsame\0\0showChart\0"
-    "insertCorso\0selectCorso\0deleteCorso"
+    "modCorso\0selectCorso\0deleteCorso"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,7 +83,7 @@ void userView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         switch (_id) {
         case 0: _t->insertEsame((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< QDate(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< int(*)>(_a[8]))); break;
         case 1: _t->showChart(); break;
-        case 2: _t->insertCorso((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->modCorso((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->selectCorso((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->deleteCorso((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
@@ -106,7 +106,7 @@ void userView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         }
         {
             typedef void (userView::*_t)(int ) const;
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&userView::insertCorso)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&userView::modCorso)) {
                 *result = 2;
                 return;
             }
@@ -178,7 +178,7 @@ void userView::showChart()const
 }
 
 // SIGNAL 2
-void userView::insertCorso(int _t1)const
+void userView::modCorso(int _t1)const
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(const_cast< userView *>(this), &staticMetaObject, 2, _a);

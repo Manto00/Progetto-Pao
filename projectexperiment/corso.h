@@ -14,6 +14,8 @@ public:
 
     QString getnome() const;
 
+    void setNome(QString nuovo);
+
     std::vector<Esame*> getEsami() const;
 
     void modificaEsame(Esame* modificato, int posizione);

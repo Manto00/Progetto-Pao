@@ -1,7 +1,8 @@
 #include "usercontroller.h"
 #include "iostream"
 
-userController::userController(userView* v, usermodel* m, Controller* parent): Controller(v, m, parent), currentCorso(-1)
+userController::userController(userView* v, usermodel* m, Controller* parent): Controller(v, m, parent), currentCorso(-1), chartBaseVisibili(false),
+    chartScrittiVisibili(false), chartOraliVisibili(false)
 {
     connectSlots();
 
@@ -28,14 +29,36 @@ void userController::connectSlots()const{
 
     connect(vista, SIGNAL(showChart()), this, SLOT(onShowChart()));
     connect(vista, SIGNAL(selectCorso(int)), this, SLOT(onShowChart(int)));
+    connect(vista, SIGNAL(modCorso(int)), this, SLOT(onModCorso(int)));
     connect(vista, SIGNAL(deleteCorso(int)), this, SLOT(onDeleteCorso(int)));
     connect(vista, SIGNAL(insertEsame(int, int, int, QDate, int, int, int, int)), this,
             SLOT(onInsertEsame(int, int, int, QDate, int, int, int, int)));
 }
 
+void userController::onModCorso(int posizione){
+    bool ok;
+    QString text=QInputDialog::getText(getView(),"Cambia nome del corso", "Nuovo nome del corso:", QLineEdit::Normal, "", &ok);
+    if(ok && !text.isEmpty()){
+        getModel()->modificaCorso(posizione, text);
+        getView()->getCorsoVector()[posizione]->modificaCorso(text);
+    }
+}
+
 void userController::onShowChart(int i){
     if(i>=0){
         currentCorso=i;
+    }
+    getView()->hideDefaultLabel();
+    if(chartBaseVisibili){
+        getView()->destroyChartsBase();
+    }
+    if(chartScrittiVisibili){
+        getView()->destroyChartsScritti();
+        chartScrittiVisibili=false;
+    }
+    if(chartOraliVisibili){
+        getView()->destroyChartsOrali();
+        chartOraliVisibili=false;
     }
     //recuperare i dati dal model
     Corso*cor=getModel()->getCorso(currentCorso);
@@ -84,10 +107,10 @@ void userController::onShowChart(int i){
                 cinque++;
                 break;
             }
-            if(QDate::currentDate().year()-(*it)->getdata().year()<5){}
-            vecPromossi[QDate::currentDate().year()-(*it)->getdata().year()]++;
+            if(QDate::currentDate().year()-(*it)->getdata().year()<5){
+                vecPromossi[QDate::currentDate().year()-(*it)->getdata().year()]++;
+            }
         }
-
         else{
             if(QDate::currentDate().year()-(*it)->getdata().year()<5){}
             vecBocciati[QDate::currentDate().year()-(*it)->getdata().year()]++;
@@ -100,9 +123,9 @@ void userController::onShowChart(int i){
         EsameOrale*oCasted=dynamic_cast<EsameOrale*>(*it);
         if(sCasted){
             //inserire i dati dell'esame scritto
-            aperte=+(sCasted)->getaperte();
-            chiuse=+(sCasted)->getchiuse();
-            esercizi=+(sCasted)->getesercizi();
+            aperte=aperte+(sCasted)->getaperte();
+            chiuse=chiuse+(sCasted)->getchiuse();
+            esercizi=esercizi+(sCasted)->getesercizi();
             scrittiCounter++;
             isScritto=true;
         }
@@ -111,53 +134,76 @@ void userController::onShowChart(int i){
             listaDurata.push_back((oCasted)->getdurata());
             isOrale=true;
         }
-        else{
-            //errore
-        }
     }
-
     getView()->createPassChart(uno, due, tre, quattro, cinque);
     getView()->createPromossiperYearChart(vecPromossi, vecBocciati);
     getView()->createVotiChart(vecVoti);
+
     if(isScritto){
         getView()->createEsChart(aperte/scrittiCounter, chiuse/scrittiCounter, esercizi/scrittiCounter);
+        chartScrittiVisibili=true;
     }
     if(isOrale){
         getView()->createDurataChart(listaDurata);
+        chartOraliVisibili=true;
     }
     /*getView()->createInsertField();*/
+    chartBaseVisibili=true;
 }
 
-void userController::removeCharts() const{
-    getView()->destroyCharts();
+void userController::removeCharts(){
+    if(chartBaseVisibili){
+        getView()->destroyChartsBase();
+        chartBaseVisibili=false;
+    }
+    if(chartScrittiVisibili){
+        getView()->destroyChartsScritti();
+        chartScrittiVisibili=false;
+    }
+    if(chartOraliVisibili){
+        getView()->destroyChartsOrali();
+        chartOraliVisibili=false;
+    }
+    getView()->showDefaultLabel();
 }
 
 void userController::onInsertEsame(int matricola, int voto, int appello, QDate date, int chiuse, int aperte,
-                                   int esercizi, int durata) const{
+                                   int esercizi, int durata){
     //un botto di controlli
     if(currentCorso<0){
         vista->showWarningDialog("Errore", "Devi prima selezionare un corso");
+        return;
     }
     else{
         if(matricola==NULL || voto==NULL || appello==NULL){
-            //errore mancano dei valori fondamentali
+            vista->showWarningDialog("Informazioni insufficienti", "Un esame necessita almeno una matricola, un voto, un appello e una data");
+            return;
         }
         else{
             if((chiuse!=0 || aperte!=0 || esercizi!=0) && (chiuse!=NULL || aperte!=NULL || esercizi!=NULL)){
                 if(durata!=0){
-                    //errore, esame o scritto o orale, non entrambi
+                    vista->showWarningDialog("Scritto o orale?", "Un esame non può sia scritto che orale");
+                    return;
                 }
                 //modifico il moddello (esame scritto)
-                //getModel()->addEsame(currentCorso, new EsameScritto(voto, appello, matricola, date, aperte, chiuse, esercizi));
+                getModel()->addEsame(currentCorso, new EsameScritto(matricola, voto, appello, date, aperte, chiuse, esercizi));
+                vista->showInformationDialog("Successo!", "L'inserimento di un esame scritto ha avuto successo");
+                onShowChart(currentCorso);
+                getView()->resetFields();
             }
             else if(durata!=0){
-                //getModel()->addEsame(currentCorso, new EsameOrale(voto, appello, matricola, date, durata));
+                getModel()->addEsame(currentCorso, new EsameOrale(matricola, voto, appello, date, durata));
+                vista->showInformationDialog("Successo!", "L'inserimento di un esame orale ha avuto successo");
+                onShowChart(currentCorso);
+                getView()->resetFields();
             }
             else{
-                getModel()->addEsame(currentCorso, new Esame(voto, appello, matricola, date));
-                std::cout<<"Hai aggiunto un esame BASE vez";
+                getModel()->addEsame(currentCorso, new Esame(matricola, voto, appello, date));
+                vista->showInformationDialog("Successo!", "L'inserimento di un esame ha avuto successo");
+                onShowChart(currentCorso);
+                getView()->resetFields();
             }
-            //salvare sul foglio json
+
 
         }
     }
@@ -185,12 +231,10 @@ void userController::onDeleteCorso(int posizione){
     getModel()->removeCorso(posizione);
     getView()->removeCorso(posizione);
     if(currentCorso==posizione){
-        std::cout<<"ERA IL CORSO CORRENTE";
         currentCorso=-1;
         removeCharts();
     }
     else if(currentCorso>posizione){
-        std::cout<<"E ENTRATO QUI!!!!!                      ";
         currentCorso--;
         }
 }
@@ -208,6 +252,7 @@ void userController::onSave() const{
     vista->setViewTitle(last);
 
     //effettuo il salvataggio ed in base all'esito mostro un messaggio
+
     bool esito = JSonReader::saveUserModel(getModel()->toQJSonDocument(),getModel()->getFilePath());
     if(!esito)
         vista->showCriticalDialog("Errore Salvataggio grave","Salvataggio NON riuscito");
@@ -238,17 +283,23 @@ void userController::onSaveAs() const{
 }
 
 void userController::onOrganizzaEsami() const{
-    esamiView* eView = new esamiView(vista->size(),vista);
+    if(currentCorso>=0){
+        esamiView* eView = new esamiView(vista->size(),vista);
 
-    //Imposto il titolo alla schermata
-    eView->setViewTitle("Visualizza esami");
+        //Imposto il titolo alla schermata
+        eView->setViewTitle("Visualizza esami");
 
-    esamiModController* esamiCtrl = new esamiModController(eView, modello, const_cast<userController*>(this), currentCorso);
-    eView->setController(esamiCtrl);
-    esamiCtrl->completeView();
-    esamiCtrl->showView();
+        esamiModController* esamiCtrl = new esamiModController(eView, modello, const_cast<userController*>(this), currentCorso);
+        eView->setController(esamiCtrl);
+        esamiCtrl->completeView();
+        esamiCtrl->showView();
 
-    vista->hide();
+        vista->hide();
+    }
+    else{
+        vista->showCriticalDialog("Errore: nessun corso", "Devi prima scegliere un corso nella tua lista."
+                                                          " Se non ce ne sono creane uno premendo su aggiungi corso");
+    }
 }
 
 void userController::onViewClosed() const {

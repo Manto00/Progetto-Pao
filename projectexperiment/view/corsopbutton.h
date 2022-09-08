@@ -29,6 +29,7 @@ public:
     QHBoxLayout*getLayout() const;
 
     int decreseCorso();
+    void modificaCorso(QString);
 
 signals:
     void selectCorso(int) const;

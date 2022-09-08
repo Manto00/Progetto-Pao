@@ -7,14 +7,18 @@
 
 class esamiModController: public Controller
 {
+    Q_OBJECT
 private:
     int currentCorso;
+
+    void connectSlots()const;
+
 public:
+    esamiModController();
+
     esamiModController(esamiView* v, usermodel* m, Controller* parent, int currentCorso);
 
     void completeView() const;
-
-    void connectSlots()const;
 
     esamiView* getView() const override;
 
@@ -26,9 +30,11 @@ public slots:
 
     void onViewClosed() const override;
 
-    void onSaveEsame(int esame,int mat, int vot, int app, QDate date, int chi, int ape, int ese, int dur) const;
+    void onSaveEsame(int esame) const;
 
     void onDeleteEsame(int i) const;
+
+    void onHome();
 
 };
 

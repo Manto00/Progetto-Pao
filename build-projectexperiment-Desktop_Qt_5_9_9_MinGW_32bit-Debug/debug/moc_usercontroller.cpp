@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_userController_t {
-    QByteArrayData data[20];
-    char stringdata0[186];
+    QByteArrayData data[21];
+    char stringdata0[197];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -50,7 +50,8 @@ QT_MOC_LITERAL(15, 130, 9), // "posizione"
 QT_MOC_LITERAL(16, 140, 8), // "onSaveAs"
 QT_MOC_LITERAL(17, 149, 6), // "onSave"
 QT_MOC_LITERAL(18, 156, 16), // "onOrganizzaEsami"
-QT_MOC_LITERAL(19, 173, 12) // "onViewClosed"
+QT_MOC_LITERAL(19, 173, 12), // "onViewClosed"
+QT_MOC_LITERAL(20, 186, 10) // "onModCorso"
 
     },
     "userController\0onShowChart\0\0i\0"
@@ -58,7 +59,7 @@ QT_MOC_LITERAL(19, 173, 12) // "onViewClosed"
     "date\0chiuse\0aperte\0esercizi\0durata\0"
     "onInsertCorso\0onDeleteCorso\0posizione\0"
     "onSaveAs\0onSave\0onOrganizzaEsami\0"
-    "onViewClosed"
+    "onViewClosed\0onModCorso"
 };
 #undef QT_MOC_LITERAL
 
@@ -68,7 +69,7 @@ static const uint qt_meta_data_userController[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -76,16 +77,17 @@ static const uint qt_meta_data_userController[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   64,    2, 0x0a /* Public */,
-       1,    0,   67,    2, 0x2a /* Public | MethodCloned */,
-       4,    8,   68,    2, 0x0a /* Public */,
-       4,    7,   85,    2, 0x2a /* Public | MethodCloned */,
-      13,    0,  100,    2, 0x0a /* Public */,
-      14,    1,  101,    2, 0x0a /* Public */,
-      16,    0,  104,    2, 0x0a /* Public */,
-      17,    0,  105,    2, 0x0a /* Public */,
-      18,    0,  106,    2, 0x0a /* Public */,
-      19,    0,  107,    2, 0x0a /* Public */,
+       1,    1,   69,    2, 0x0a /* Public */,
+       1,    0,   72,    2, 0x2a /* Public | MethodCloned */,
+       4,    8,   73,    2, 0x0a /* Public */,
+       4,    7,   90,    2, 0x2a /* Public | MethodCloned */,
+      13,    0,  105,    2, 0x0a /* Public */,
+      14,    1,  106,    2, 0x0a /* Public */,
+      16,    0,  109,    2, 0x0a /* Public */,
+      17,    0,  110,    2, 0x0a /* Public */,
+      18,    0,  111,    2, 0x0a /* Public */,
+      19,    0,  112,    2, 0x0a /* Public */,
+      20,    1,  113,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -98,6 +100,7 @@ static const uint qt_meta_data_userController[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   15,
 
        0        // eod
 };
@@ -118,6 +121,7 @@ void userController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 7: _t->onSave(); break;
         case 8: _t->onOrganizzaEsami(); break;
         case 9: _t->onViewClosed(); break;
+        case 10: _t->onModCorso((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -148,13 +152,13 @@ int userController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

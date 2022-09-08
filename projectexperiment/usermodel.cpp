@@ -29,6 +29,10 @@ std::vector<Corso*> usermodel::getCorsi()const{
     return corsiVector;
 }
 
+void usermodel::modificaCorso(int posizione, QString nome){
+    corsiVector[posizione]->setNome(nome);
+}
+
 
 void usermodel::addCorso(Corso *nuovo){
     for(auto it=corsiVector.begin(); it!=corsiVector.end(); it++){
@@ -118,6 +122,7 @@ const QJsonDocument& usermodel::toQJSonDocument() const{
                 esaOObj.insert(QString::fromStdString("durata"),QJsonValue((int)(oCasted->getdurata())));
                 esamiOraliArray.push_back(esaOObj);
             }
+            i++;
         }
         corObj.insert(QString::fromStdString("esami"), esamiArray);
         corObj.insert(QString::fromStdString("esami scritti"), esamiScrittiArray);

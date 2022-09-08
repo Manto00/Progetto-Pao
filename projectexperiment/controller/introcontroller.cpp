@@ -23,6 +23,7 @@ void introController::onNewModel() const{
     userView* uView = new userView(vista->size(),vista);
     uView->setViewTitle(tr("Nuovo"));
     userController* uController = new userController(uView,new usermodel(),const_cast<Controller*>(static_cast<const Controller*>(this)));
+    uView->setController(uController);
     uController->showView();
     vista->hide();
 }

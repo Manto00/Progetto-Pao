@@ -27,6 +27,8 @@ public:
 
     void removeCorso(int posizione);
 
+    void modificaCorso(int posizione, QString);
+
     void addEsame(int posizione, Esame*nuovo);
 
     void removeEsame(int posCorso, int posizione);

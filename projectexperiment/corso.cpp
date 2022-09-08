@@ -1,4 +1,5 @@
 #include "corso.h"
+#include <iostream>
 
 Corso::Corso(QString n, std::vector<Esame*> esami): nome(n), esameVector(esami)
 {
@@ -6,6 +7,10 @@ Corso::Corso(QString n, std::vector<Esame*> esami): nome(n), esameVector(esami)
 }
 
 QString Corso::getnome() const {return nome;}
+
+void Corso::setNome(QString nuovo){
+    nome=nuovo;
+}
 
 std::vector<Esame*> Corso::getEsami() const {return esameVector;}
 
@@ -15,8 +20,13 @@ void Corso::addEsame(Esame* nuovo){
 
 
 void Corso::modificaEsame(Esame* modificato, int posizione){
-    auto it=esameVector.begin()+posizione;
-    esameVector.emplace(it, modificato);
+    delete esameVector[posizione];
+    esameVector[posizione]=modificato;
+
+    //auto it=esameVector.begin()+posizione;
+    //esameVector.emplace(it, modificato);
+    std::cout<<(esameVector[posizione])->getmatricola();
+    std::cout<<posizione;
 }
 
 void Corso::removeEsame(int posizione){

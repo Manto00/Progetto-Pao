@@ -22,6 +22,7 @@ INPUT(
 ./release\votilinechart.o
 ./release\moc_barchartview.o
 ./release\moc_controller.o
+./release\moc_esamimodcontroller.o
 ./release\moc_introcontroller.o
 ./release\moc_usercontroller.o
 ./release\moc_homeview.o

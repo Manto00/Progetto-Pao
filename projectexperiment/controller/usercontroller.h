@@ -10,10 +10,11 @@
 class userController: public Controller
 {
     Q_OBJECT
-public:
-    userController();
 private:
     int currentCorso;
+    bool chartBaseVisibili;
+    bool chartScrittiVisibili;
+    bool chartOraliVisibili;
 
     void connectSlots() const;
 
@@ -25,7 +26,7 @@ public:
 
     usermodel* getModel() const override;
 
-    void removeCharts() const;
+    void removeCharts();
 
 signals:
 
@@ -33,7 +34,7 @@ public slots:
 
     void onShowChart(int i=-1);
 
-    void onInsertEsame(int matricola, int voto, int appello, QDate date, int chiuse, int aperte, int esercizi, int durata=0) const;
+    void onInsertEsame(int matricola, int voto, int appello, QDate date, int chiuse, int aperte, int esercizi, int durata=0);
 
     void onInsertCorso() const;
 
@@ -46,6 +47,8 @@ public slots:
     void onOrganizzaEsami() const;
 
     void onViewClosed() const override;
+
+    void onModCorso(int posizione);
 
 };
 

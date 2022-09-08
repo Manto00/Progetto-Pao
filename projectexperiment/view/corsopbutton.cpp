@@ -30,6 +30,10 @@ int corsoPButton::decreseCorso(){
     return numeroCorso--;
 }
 
+void corsoPButton::modificaCorso(QString nome){
+    corsoButton->setText(nome);
+}
+
 int corsoPButton::getNumeroCorso() const{
     return numeroCorso;
 }

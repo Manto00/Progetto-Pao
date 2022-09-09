@@ -2,13 +2,13 @@
 #define CORSO_H
 
 #include <esame.h>
+#include <vector>
 
 class Corso
 {
 private:
     QString nome;
     std::vector<Esame*> esameVector;
-    //Aggiungere dei bool per capire che esami ammette???
 public:
     Corso(QString name, std::vector<Esame*> lista=std::vector<Esame*>());
 

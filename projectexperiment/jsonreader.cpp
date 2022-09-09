@@ -1,9 +1,7 @@
 #include "jsonreader.h"
-#include "iostream"
 
 QJsonDocument* JSonReader::getJSONFileData(const QString& path){
     if(path.isNull()) return new QJsonDocument();
-    //std::cout<<"file letto";
     QString fileData;
     QFile file;
 
@@ -15,20 +13,15 @@ QJsonDocument* JSonReader::getJSONFileData(const QString& path){
     //Controllo validità documento
     QJsonDocument* doc = new QJsonDocument(QJsonDocument::fromJson(fileData.toLocal8Bit()));
     QJsonObject dataObj = doc->object();
-    //if(dataObj.isEmpty()) std::cout<<"l'array è vuoto";
 
     QStringList keywords=dataObj.keys();
     for(int i=0; keywords.size()>i; i++){
-        //std::cout<<keywords[i].toStdString();
     }
-    //std::cout<<"contengo"<<keywords.size()<<"keywords";
 
     if(!dataObj.contains("corsi")){
-        std::cout<<"no corsi nelle keyword";
         delete doc;
         return new QJsonDocument();
     }
-    //std::cout<<"file letto e funzionante";
     return doc;
 }
 
@@ -50,28 +43,22 @@ std::vector<Corso*> JSonReader::getCorsi(QJsonDocument* data){
     for(const QJsonValue& corso : corsi){
         std::vector<Esame*> esamiVec;
         QJsonObject objectEsami=corso.toObject();
-        //std::cout<<"    object esami ha"<<objectEsami.keys().size()<<"keywords    ";
         QJsonArray arrayEsami= objectEsami["esami"].toArray();
         QJsonArray arrayEsamiScritti= objectEsami["esami scritti"].toArray();
         QJsonArray arrayEsamiOrali= objectEsami["esami orali"].toArray();
         int i=0;
         for(const QJsonValue& esame: arrayEsami){
             QJsonObject objectBase=esame.toObject();
-            //int a(objectBase.value("appello").toInt());
-            //std::cout<<a;
-            //std::cout<<"    object base ha "<<objectBase.keys()[0].toStdString()<<" keywords    ";
             Esame* nuovoEsame=new Esame(
                 objectBase.value("matricola").toInt(),
                 objectBase.value("voto").toInt(),
                 objectBase.value("appello").toInt(),
                 QDate::fromString(objectBase.value("data").toString(),"dd/MM/yyyy"));
                 esamiVec.push_back(nuovoEsame);
-                //std::cout<<esamiVec[i]->getmatricola();
                 i++;
         }
         for(const QJsonValue& esame: arrayEsamiScritti){
             QJsonObject objectScritti=esame.toObject();
-            //std::cout<<"    object scritti ha"<<objectEsami.keys().size()<<"keywords    ";
             Esame* nuovoEsame=new EsameScritto(
                 objectScritti.value("matricola").toInt(),
                 objectScritti.value("voto").toInt(),
@@ -81,12 +68,10 @@ std::vector<Corso*> JSonReader::getCorsi(QJsonDocument* data){
                 objectScritti.value("aperte").toInt(),
                 objectScritti.value("esercizi").toInt());
             esamiVec.push_back(nuovoEsame);
-            //std::cout<<esamiVec[i]->getvoto();
             i++;
         }
         for(const QJsonValue& esame: arrayEsamiOrali){
             QJsonObject objectOrali=esame.toObject();
-            //std::cout<<"    object orale ha"<<objectEsami.keys().size()<<"keywords    ";
             Esame* nuovoEsame=new EsameOrale(
                 objectOrali.value("matricola").toInt(),
                 objectOrali.value("voto").toInt(),
@@ -94,7 +79,6 @@ std::vector<Corso*> JSonReader::getCorsi(QJsonDocument* data){
                 QDate::fromString(objectOrali.value("data").toString(),"dd/MM/yyyy"),
                 objectOrali.value("durata").toInt());
             esamiVec.push_back(nuovoEsame);
-            //std::cout<<esamiVec[i]->getappello();
             i++;
 
         }
@@ -103,7 +87,6 @@ std::vector<Corso*> JSonReader::getCorsi(QJsonDocument* data){
                 corso.toObject().value("nome").toString(), esamiVec);
         corsiVec.push_back(r);
     }
-    //std::vector<Corso*> corsiVec;
     return corsiVec;
 }
 

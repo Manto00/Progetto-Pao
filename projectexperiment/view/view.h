@@ -5,14 +5,11 @@
 #include <QSize>
 #include <QMessageBox>
 #include <QCloseEvent>
-#include <iostream>
 
 
 class Controller;
-/**
- * @brief The View class
- * Classe che serve a rappresentare una View,
- */
+
+
 class View : public QWidget
 {
     Q_OBJECT
@@ -31,10 +28,6 @@ public:
     explicit View(const QSize& s = QSize(),View* parent = nullptr);
 
 
-    virtual ~View() {
-        /*setParent(nullptr);*/
-    }
-
     virtual void setController(Controller* c);
 
     void setWindowSize(const QSize&);
@@ -51,7 +44,6 @@ public:
 
 
 signals:
-    //Segnale emesso al Controller per avvisarlo della chiusura della View
     void viewClosed() const;
 
 public slots:

@@ -1,20 +1,9 @@
 #include "usermodel.h"
-#include "iostream"
 
 usermodel::usermodel(QJsonDocument *data, QString* path){
     corsiVector = JSonReader::getCorsi(data);
     filePath = path;
-    /*for(unsigned int i=0; corsiVector.size()>i; i++){
-        std::cout<<corsiVector[i]->getnome().toStdString()<< "  ";
-        for(unsigned int j=0; corsiVector[i]->getEsami().size()>j; j++){
-            std::cout<<corsiVector[i]->getEsami()[j]->getappello()<<"    ";
-            std::cout<<corsiVector[i]->getEsami()[j]->getdata().toString().toStdString()<<"    ";
-            std::cout<<corsiVector[i]->getEsami()[j]->getmatricola()<<"    ";
-            std::cout<<corsiVector[i]->getEsami()[j]->getvoto()<<"    ";
-        }
-    }*/
 }
-/*recordList = JSONFilePicker::getRecords(data);*/
 
 usermodel::usermodel(){
     corsiVector=std::vector<Corso*>();
@@ -29,21 +18,29 @@ std::vector<Corso*> usermodel::getCorsi()const{
     return corsiVector;
 }
 
-void usermodel::modificaCorso(int posizione, QString nome){
+bool usermodel::modificaCorso(int posizione, QString nome){
+    for(auto it=corsiVector.begin(); it!=corsiVector.end(); it++){
+        if(nome==(*it)->getnome()){
+            return false;
+        }
+    }
     corsiVector[posizione]->setNome(nome);
+    return true;
 }
 
 
-void usermodel::addCorso(Corso *nuovo){
+bool usermodel::addCorso(Corso *nuovo){
     for(auto it=corsiVector.begin(); it!=corsiVector.end(); it++){
         if(nuovo->getnome()==(*it)->getnome()){
-            //TO DO:mostra errorre
+            return false;
         }
     }
     corsiVector.push_back(nuovo);
+    return true;
 }
 
 void usermodel::removeCorso(int posizione){
+    delete corsiVector[posizione];
     corsiVector.erase(corsiVector.begin()+posizione);
 }
 

@@ -73,15 +73,15 @@ public:
 
     void insertCorsi(std::vector<QString> listaCorsi);
 
-    void createPassChart(unsigned int primo, unsigned int secondo, unsigned int terzo, unsigned int quarto, unsigned int quinto);
+    void createPassChart(unsigned int primo, unsigned int secondo, unsigned int terzo, unsigned int quarto, unsigned int quinto, QString title);
 
-    void createPromossiperYearChart(std::vector<unsigned int> promossi, std::vector<unsigned int> bocciati);
+    void createPromossiperYearChart(std::vector<unsigned int> promossi, std::vector<unsigned int> bocciati, QString title);
 
-    void createVotiChart(std::vector<unsigned int> voti);
+    void createVotiChart(std::vector<unsigned int> voti, QString title);
 
-    void createDurataChart(std::list<unsigned int> durata);
+    void createDurataChart(std::list<unsigned int> durata, QString title);
 
-    void createEsChart(float aperte, float chiuse, float esercizi);
+    void createEsChart(float aperte, float chiuse, float esercizi, QString title);
 
     void createInsertField();
 

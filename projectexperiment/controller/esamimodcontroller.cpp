@@ -1,5 +1,4 @@
 #include "esamimodcontroller.h"
-#include "iostream"
 
 esamiModController::esamiModController(esamiView*v, usermodel* m, Controller* c, int i):Controller(v, m, c), currentCorso(i)
 {
@@ -51,7 +50,6 @@ usermodel* esamiModController::getModel() const {
     return static_cast<usermodel*>(modello);
 }
 
-//LA FUNZIONE SAVE NON VA BENE, CAMBIA L'ORDINE DEL VETTORE ---------> in teoria non  più
 void esamiModController::onSaveEsame(int esame) const{
     int mat, vot, ape, chi, app, ese, dur;
     QDate date=getView()->getRows()[esame]->getDate();

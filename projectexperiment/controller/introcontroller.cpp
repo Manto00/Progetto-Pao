@@ -1,5 +1,4 @@
 #include "introcontroller.h"
-#include "iostream"
 
 
 introController::introController(introView* v, Controller* parent): Controller(v, nullptr, parent)
@@ -13,11 +12,7 @@ introView* introController::getView() const {
 
 usermodel* introController::getModel() const{return nullptr;}
 
-void introController::connectSlots() const{
-    /*
-    connect(vista, SIGNAL(createNewModel()), this, SLOT(onNewModel()));
-    connect(vista, SIGNAL(openUserView()), this, SLOT(onOpenView()));*/
-}
+void introController::connectSlots() const{}
 
 void introController::onNewModel() const{
     userView* uView = new userView(vista->size(),vista);
@@ -41,7 +36,6 @@ void introController::onOpenView() const{
         vista->showWarningDialog("Errore Apertura File", "Riprova con un file valido");
         return;
     }
-    std::cout<<"file valido";
 
     //Apertura Nuova schermata Admin da progetto Salvato
     userView* uView = new userView(vista->size(),vista);
@@ -53,8 +47,8 @@ void introController::onOpenView() const{
     QString last = pieces.value( pieces.length() - 1 );
     uView->setViewTitle(last);
 
-    userController* userCtrl = new userController(uView, uModel, const_cast<introController*>(this));//sitemare segnali e slot nella funzione set controller
-    uView->setController(userCtrl);//sitemare segnali e slot nella funzione set controller
+    userController* userCtrl = new userController(uView, uModel, const_cast<introController*>(this));
+    uView->setController(userCtrl);
     userCtrl->showView();
 
     vista->hide();

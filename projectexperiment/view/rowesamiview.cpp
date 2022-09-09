@@ -1,6 +1,5 @@
 #include "rowesamiview.h"
 #include "controller/controller.h"
-#include "iostream"
 
 rowEsamiView::rowEsamiView(const QSize& s,View* parent): View(s, parent)
 {
@@ -63,8 +62,6 @@ void rowEsamiView::createRow(int esame, int mat, int vot, int app, QDate date, i
     if(durata->value()==0){
         durata->setDisabled(true);
     }
-    //ESPERIMENTI!!!!:
-
 }
 
 void rowEsamiView::setController(Controller *c){
@@ -117,15 +114,7 @@ int rowEsamiView::getEsercizi() const{
 }
 
 void rowEsamiView::connectViewSignals() const{
-    //connect(eliminaButton, SIGNAL(clicked()), ctrl, SLOT(deleteEsame(numeroEsame)));
-    //connect(salvaButton, SIGNAL(clicked()), ctrl, SLOT(modEsame(matricola->value(), voto->value(), appello->value(), dateBox->date(),
-                                                                //chiuse->value(), aperte->value(), esercizi->value(), durata->value(),
-                                                                //numeroEsame)));
     connect(eliminaButton, &QPushButton::clicked,this,[this](){emit removeRow(numeroEsame);});
-    /*connect(salvaButton, &QPushButton::clicked,this,[this](){emit modifyRow(matricola->value(), voto->value(), appello->value(), dateBox->date(),
-                chiuse->value(), aperte->value(), esercizi->value(), durata->value(),
-                numeroEsame);});*/
-    //modEsame
 }
 
 int rowEsamiView::decreseEsame(){
@@ -133,8 +122,5 @@ int rowEsamiView::decreseEsame(){
     disconnect(eliminaButton, 0, 0, 0);
     disconnect(salvaButton, 0, 0, 0);
     connect(eliminaButton, &QPushButton::clicked,this,[this](){emit removeRow(numeroEsame);});
-    /*connect(salvaButton, &QPushButton::clicked,this,[this](){emit modifyRow(matricola->value(), voto->value(), appello->value(), dateBox->date(),
-                chiuse->value(), aperte->value(), esercizi->value(), durata->value(),
-                numeroEsame);});*/
     return numeroEsame;
 }

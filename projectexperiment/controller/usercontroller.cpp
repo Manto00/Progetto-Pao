@@ -1,5 +1,4 @@
 #include "usercontroller.h"
-#include "iostream"
 
 userController::userController(userView* v, usermodel* m, Controller* parent): Controller(v, m, parent), currentCorso(-1), chartBaseVisibili(false),
     chartScrittiVisibili(false), chartOraliVisibili(false)
@@ -11,7 +10,6 @@ userController::userController(userView* v, usermodel* m, Controller* parent): C
     unsigned int i=0;
     while(corsoVec.size()>i){
         stringVec.push_back(corsoVec[i]->getnome());
-        //std::cout<<stringVec[i].toStdString();
         i++;
     }
     getView()->insertCorsi(stringVec);
@@ -39,8 +37,11 @@ void userController::onModCorso(int posizione){
     bool ok;
     QString text=QInputDialog::getText(getView(),"Cambia nome del corso", "Nuovo nome del corso:", QLineEdit::Normal, "", &ok);
     if(ok && !text.isEmpty()){
-        getModel()->modificaCorso(posizione, text);
-        getView()->getCorsoVector()[posizione]->modificaCorso(text);
+        ok=getModel()->modificaCorso(posizione, text);
+        if(ok)
+            getView()->getCorsoVector()[posizione]->modificaCorso(text);
+        else
+            vista->showCriticalDialog("Nome non valido", "Il nome che hai scelto è già stato assegnato ad un altro corso, prova con un altro");
     }
 }
 
@@ -70,7 +71,7 @@ void userController::onShowChart(int i){
     unsigned int tre=0;
     unsigned int quattro=0;
     unsigned int cinque=0;
-    std::vector<unsigned int> vecVoti(30, 0);
+    std::vector<unsigned int> vecVoti(31, 0);
     std::vector<unsigned int> vecPromossi(5, 0);
     std::vector<unsigned int> vecBocciati(5, 0);
     //std::list<unsigned int> listaMatricola;   (aggiungere se serve)
@@ -135,19 +136,18 @@ void userController::onShowChart(int i){
             isOrale=true;
         }
     }
-    getView()->createPassChart(uno, due, tre, quattro, cinque);
-    getView()->createPromossiperYearChart(vecPromossi, vecBocciati);
-    getView()->createVotiChart(vecVoti);
+    getView()->createPassChart(uno, due, tre, quattro, cinque, cor->getnome());
+    getView()->createPromossiperYearChart(vecPromossi, vecBocciati, cor->getnome());
+    getView()->createVotiChart(vecVoti, cor->getnome());
 
     if(isScritto){
-        getView()->createEsChart(aperte/scrittiCounter, chiuse/scrittiCounter, esercizi/scrittiCounter);
+        getView()->createEsChart(aperte/scrittiCounter, chiuse/scrittiCounter, esercizi/scrittiCounter, cor->getnome());
         chartScrittiVisibili=true;
     }
     if(isOrale){
-        getView()->createDurataChart(listaDurata);
+        getView()->createDurataChart(listaDurata, cor->getnome());
         chartOraliVisibili=true;
     }
-    /*getView()->createInsertField();*/
     chartBaseVisibili=true;
 }
 
@@ -169,7 +169,6 @@ void userController::removeCharts(){
 
 void userController::onInsertEsame(int matricola, int voto, int appello, QDate date, int chiuse, int aperte,
                                    int esercizi, int durata){
-    //un botto di controlli
     if(currentCorso<0){
         vista->showWarningDialog("Errore", "Devi prima selezionare un corso");
         return;
@@ -213,16 +212,17 @@ void userController::onInsertCorso() const{
     bool ok;
     QString text=QInputDialog::getText(getView(),"Aggiungi nuovo corso", "Nome del corso:", QLineEdit::Normal, "", &ok);
     if(ok && !text.isEmpty()){
-        getModel()->addCorso(new Corso(text));
+        ok=getModel()->addCorso(new Corso(text));
+        if(ok)
         getView()->addCorso(text);
+        else
+            vista->showCriticalDialog("Nome non disponibile", "Il nome che hai scelto è già utilizzato per un altro corso");
     }
 }
 
 
 void userController::onDeleteCorso(int posizione){
-    /*for(it+1;it!=getView()->getCorsoVector().end();it++){
-            (*it)->decreseCorso();
-        }*/
+
     unsigned int i=posizione;
     while(i<getView()->getCorsoVector().size()){
         getView()->getCorsoVector()[i]->decreseCorso();
@@ -240,18 +240,15 @@ void userController::onDeleteCorso(int posizione){
 }
 
 void userController::onSave() const{
-    // Se il file non esiste, magari perchè è un nuovo progetto, salvo con nome
     if(getModel()->getFilePath().isEmpty() || getModel()->getFilePath().isNull()){
         onSaveAs();
         return;
     }
 
-    //Imposto il titolo alla schermata
     QStringList pieces = getModel()->getFilePath().split( "/" );
     QString last = pieces.value( pieces.length() - 1 );
     vista->setViewTitle(last);
 
-    //effettuo il salvataggio ed in base all'esito mostro un messaggio
 
     bool esito = JSonReader::saveUserModel(getModel()->toQJSonDocument(),getModel()->getFilePath());
     if(!esito)
@@ -261,12 +258,11 @@ void userController::onSave() const{
 }
 
 void userController::onSaveAs() const{
-    //Faccio la richiesta per il nume del file
+
     QString jsonFilter = "JSON Files (*.json)";
     QString titolo = QString::fromStdString("Salva file con nome");
     QString fname = QFileDialog::getSaveFileName(vista,titolo,QDir::homePath(),jsonFilter);
 
-    //Verifico che il nume sia valido
     if(fname.isEmpty() || fname.isNull()){
         vista->showCriticalDialog("Errore Salvataggio","Salvataggio NON riuscito\nInserire un nome file valido");
         return;
@@ -275,10 +271,8 @@ void userController::onSaveAs() const{
     if (!fname.endsWith(".json"))
         fname+= tr(".json");
 
-    //Setto il nume del file al modello di dati
     getModel()->setFilePath(fname);
 
-    //ora faccio il salvataggio automatico
     onSave();
 }
 
@@ -286,7 +280,6 @@ void userController::onOrganizzaEsami() const{
     if(currentCorso>=0){
         esamiView* eView = new esamiView(vista->size(),vista);
 
-        //Imposto il titolo alla schermata
         eView->setViewTitle("Visualizza esami");
 
         esamiModController* esamiCtrl = new esamiModController(eView, modello, const_cast<userController*>(this), currentCorso);

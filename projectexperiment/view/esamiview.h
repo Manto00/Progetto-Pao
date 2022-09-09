@@ -26,7 +26,7 @@ private:
 public:
     esamiView(const QSize& s = QSize(), View* parent = nullptr);
 
-    ~esamiView();
+
 
     std::vector<rowEsamiView*> getRows() const;
 

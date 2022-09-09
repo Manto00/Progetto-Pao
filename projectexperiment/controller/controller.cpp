@@ -1,5 +1,4 @@
 #include "controller.h"
-#include "iostream"
 
 Controller::Controller(View*v, usermodel*m, Controller*parent): QObject(parent), vista(v), modello(m)
 {

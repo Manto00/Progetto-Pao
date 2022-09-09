@@ -1,6 +1,5 @@
 #include "corsopbutton.h"
 #include <controller/controller.h>
-#include "iostream"
 
 corsoPButton::corsoPButton(QString title, int numero, View*parent)
 {

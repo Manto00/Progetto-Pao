@@ -29,8 +29,7 @@ private:
 public:
     rowEsamiView(const QSize& s = QSize(),View* parent = nullptr);
 
-    ~rowEsamiView(){
-    }
+
 
     void createRow(int esame, int mat, int vot, int app, QDate date, int chi=0, int ape=0, int ese=0, int dur=0);
 

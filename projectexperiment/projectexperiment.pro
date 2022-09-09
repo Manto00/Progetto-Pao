@@ -9,49 +9,39 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    barchartview.cpp \
     controller/controller.cpp \
     controller/esamimodcontroller.cpp \
     controller/introcontroller.cpp \
     controller/usercontroller.cpp \
     corso.cpp \
     esame.cpp \
-    homeview.cpp \
     jsonreader.cpp \
     main.cpp \
     mainwindow.cpp \
     usermodel.cpp \
-    controller/homecontroller.cpp \
     view/corsopbutton.cpp \
     view/esamiview.cpp \
     view/introview.cpp \
-    view/pieview.cpp \
     view/rowesamiview.cpp \
     view/userview.cpp \
-    view/view.cpp \
-    votilinechart.cpp
+    view/view.cpp
 
 HEADERS += \
-    barchartview.h \
     controller/controller.h \
     controller/esamimodcontroller.h \
     controller/introcontroller.h \
     controller/usercontroller.h \
     corso.h \
     esame.h \
-    homeview.h \
     jsonreader.h \
     mainwindow.h \
     usermodel.h \
-    controller/homecontroller.h \
     view/corsopbutton.h \
     view/esamiview.h \
     view/introview.h \
-    view/pieview.h \
     view/rowesamiview.h \
     view/userview.h \
-    view/view.h \
-    votilinechart.h
+    view/view.h
 
 FORMS += \
     mainwindow.ui

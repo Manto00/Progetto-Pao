@@ -23,11 +23,11 @@ public:
 
     usermodel();
 
-    void addCorso(Corso* nuovo);
+    bool addCorso(Corso* nuovo);
 
     void removeCorso(int posizione);
 
-    void modificaCorso(int posizione, QString);
+    bool modificaCorso(int posizione, QString);
 
     void addEsame(int posizione, Esame*nuovo);
 

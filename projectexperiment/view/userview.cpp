@@ -1,6 +1,5 @@
 #include "userview.h"
 #include "controller/controller.h"
-#include "iostream"
 
 userView::userView(const QSize& s,View* parent) :
     View(s,parent)
@@ -15,12 +14,21 @@ userView::userView(const QSize& s,View* parent) :
     mainLayout->addLayout(activeLayout);
 
     corsiLayout=new QVBoxLayout();
+    QWidget* scrollAreaContent = new QWidget;
+    scrollAreaContent->setLayout( corsiLayout );
+    QScrollArea* scrollArea = new QScrollArea;
+    scrollArea->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    scrollArea->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+    scrollArea->setWidgetResizable( true );
+    scrollArea->setMinimumWidth(550);
+    scrollArea->setWidget( scrollAreaContent );
+
     chartLayout=new QVBoxLayout();
     fieldLayout=new QVBoxLayout();
     chartBaseLayout=new QHBoxLayout();
     chartSpecificiLayout=new QHBoxLayout();
-    activeLayout->addLayout(corsiLayout, 1);
-    activeLayout->addLayout(chartLayout,90);
+    activeLayout->addWidget(scrollArea, 30);
+    activeLayout->addLayout(chartLayout,65);
     activeLayout->addLayout(fieldLayout, 5);
     chartLayout->setSizeConstraint(QLayout::SetMaximumSize);
     chartLayout->addLayout(chartBaseLayout,50);
@@ -35,14 +43,13 @@ userView::userView(const QSize& s,View* parent) :
     introLayout->addWidget(salvaCome, Qt::AlignCenter);
 
     addCorsoButton= new QPushButton("Aggiungi un corso",this);
+    addCorsoButton->resize(200,100);
     corsiLayout->addWidget(addCorsoButton);
 
     noChart=new QLabel("Nessun corso selezionato, per osservare le statistiche seleziona un corso \n"
                        "(se non è presente nessun corso puoi crearne uno premendo su Aggiungi un corso)");
-    chartBaseLayout->addWidget(noChart, Qt::AlignHCenter);
+    chartBaseLayout->addWidget(noChart, Qt::AlignCenter);
 
-    //aggiornaButton=new QPushButton("Aggiorna grafici", this);
-    //chartLayout->addWidget(aggiornaButton, Qt::AlignCenter);
 
     createInsertField();
     //implementazione
@@ -60,13 +67,13 @@ void userView::setController(Controller *c){
 void userView::insertCorsi(std::vector<QString> listaCorsi){
     for(unsigned int i=0; listaCorsi.size()>i; i++){
         corsoPButton*corsoButton=new corsoPButton(listaCorsi[i], i, this);
-        //corsoButton->setController(ctrl);
         corsiLayout->addLayout(corsoButton->getLayout());
         corsiVec.push_back(corsoButton);
     }
 }
 
-void userView::createPassChart(unsigned int primo, unsigned int secondo, unsigned int terzo, unsigned int quarto, unsigned int quinto){
+void userView::createPassChart(unsigned int primo, unsigned int secondo, unsigned int terzo, unsigned int quarto, unsigned int quinto,
+                               QString title){
     QPieSeries *series = new QPieSeries();
     series->append("Primo", primo);
     series->append("Secondo", secondo);
@@ -75,32 +82,52 @@ void userView::createPassChart(unsigned int primo, unsigned int secondo, unsigne
     series->append("Quinto", quinto);
 
     //impostazioni
-    QPieSlice *slice = series->slices().at(1);
-    slice->setExploded(true);
-    slice->setLabelVisible(true);
-    slice->setPen(QPen(Qt::darkGreen, 2));
-    slice->setBrush(Qt::green);
-
-
+    if(!(primo==0)){
+        QPieSlice *slice0 = series->slices().at(0);
+        slice0->setExploded(true);
+        slice0->setLabelVisible(true);
+        slice0->setPen(QPen(Qt::darkGreen, 2));
+        slice0->setBrush(Qt::green);
+    }
+    if(!(secondo==0)){
+        QPieSlice *slice1 = series->slices().at(1);
+        slice1->setExploded(true);
+        slice1->setLabelVisible(true);
+        slice1->setPen(QPen(Qt::darkGreen, 2));
+        slice1->setBrush(Qt::black);
+    }
+    if(!(terzo==0)){
+        QPieSlice *slice2 = series->slices().at(2);
+        slice2->setExploded(true);
+        slice2->setLabelVisible(true);
+        slice2->setPen(QPen(Qt::darkGreen, 2));
+        slice2->setBrush(Qt::red);
+    }
+    if(!(quarto==0)){
+        QPieSlice *slice3 = series->slices().at(3);
+        slice3->setExploded(true);
+        slice3->setLabelVisible(true);
+        slice3->setPen(QPen(Qt::darkGreen, 2));
+        slice3->setBrush(Qt::blue);
+    }
+    if(!(quinto==0)){
+        QPieSlice *slice4 = series->slices().at(4);
+        slice4->setExploded(true);
+        slice4->setLabelVisible(true);
+        slice4->setPen(QPen(Qt::darkGreen, 2));
+        slice4->setBrush(Qt::yellow);
+    }
     passChart = new QChart();
     passChart->addSeries(series);
-    passChart->setTitle("Esami superati ad ogni appello");
+    passChart->setTitle("Esami superati ad ogni appello: "+title);
 
 
     passChartView = new QChartView(passChart);
-    //passChartView->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     chartSpecificiLayout->addWidget(passChartView, 1);
-
-    /*QScrollArea*area=new QScrollArea();
-    area->setWidget(passChartView);
-    area->setLayout(chartLayout);
-    area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    area->resize(300,300);
-    activeLayout->addWidget(area);*/
 
 }
 
-void userView::createPromossiperYearChart(std::vector<unsigned int> promossi, std::vector<unsigned int> bocciati){
+void userView::createPromossiperYearChart(std::vector<unsigned int> promossi, std::vector<unsigned int> bocciati, QString title){
     QBarSet *set0 = new QBarSet("Promossi");
     QBarSet *set1 = new QBarSet("Bocciati");
     int max=100;
@@ -120,7 +147,7 @@ void userView::createPromossiperYearChart(std::vector<unsigned int> promossi, st
     //impostazioni e altre categorie
     barChart = new QChart();
     barChart->addSeries(barSeries);
-    barChart->setTitle("Esiti positivi e negativi degli ultimi 5 anni");
+    barChart->setTitle("Esiti positivi e negativi degli ultimi 5 anni: "+title);
     barChart->setAnimationOptions(QChart::SeriesAnimations);
     QStringList categories;
     categories << QString::number((QDate::currentDate().year()-4)) << QString::number((QDate::currentDate().year()-3)) <<
@@ -145,11 +172,11 @@ void userView::createPromossiperYearChart(std::vector<unsigned int> promossi, st
 
 }
 
-void userView::createVotiChart(std::vector<unsigned int> voti){
+void userView::createVotiChart(std::vector<unsigned int> voti, QString title){
     //LINE CHART
     //inseriemento dati
     QLineSeries *lineSeries = new QLineSeries();
-    for(int i=0; i!=30; i++){
+    for(int i=0; i!=31; i++){
         lineSeries->append(i, voti[i]);
     }
 
@@ -158,7 +185,7 @@ void userView::createVotiChart(std::vector<unsigned int> voti){
     votiChart->legend()->hide();
     votiChart->addSeries(lineSeries);
     votiChart->createDefaultAxes();
-    votiChart->setTitle("Distribuzione dei voti");
+    votiChart->setTitle("Distribuzione dei voti: "+title);
 
     votiChartView = new QChartView(votiChart);
     votiChartView->setRenderHint(QPainter::Antialiasing);
@@ -166,7 +193,7 @@ void userView::createVotiChart(std::vector<unsigned int> voti){
     chartBaseLayout->addWidget(votiChartView,1);
 }
 
-void userView::createDurataChart(std::list<unsigned int> durata){
+void userView::createDurataChart(std::list<unsigned int> durata, QString title){
         QLineSeries *series = new QLineSeries();
         unsigned int i=0;
         unsigned int cnt;
@@ -191,7 +218,7 @@ void userView::createDurataChart(std::list<unsigned int> durata){
 
         QChart *durataChart = new QChart();
         durataChart->addSeries(series);
-        durataChart->setTitle("Durata prove orali");
+        durataChart->setTitle("Durata prove orali: "+title);
         durataChart->createDefaultAxes();
         durataChart->axes(Qt::Horizontal).first()->setRange(0, 50);
         durataChart->axes(Qt::Vertical).first()->setRange(0, max);
@@ -200,23 +227,41 @@ void userView::createDurataChart(std::list<unsigned int> durata){
          chartBaseLayout->addWidget(durChartView,1);
 }
 
-void userView::createEsChart(float aperte, float chiuse, float esercizi){
+void userView::createEsChart(float aperte, float chiuse, float esercizi, QString title){
     QPieSeries *series = new QPieSeries();
     series->append("Aperte", aperte);
     series->append("Chiuse", chiuse);
     series->append("Esercizi", esercizi);
 
     //impostazioni
-    QPieSlice *slice = series->slices().at(1);
-    slice->setExploded(true);
-    slice->setLabelVisible(true);
-    slice->setPen(QPen(Qt::darkGreen, 2));
-    slice->setBrush(Qt::green);
 
+    if(!(aperte==0)){
+        QPieSlice *slice0 = series->slices().at(0);
+        slice0->setExploded(true);
+        slice0->setLabelVisible(true);
+        slice0->setPen(QPen(Qt::darkGreen, 2));
+        slice0->setBrush(Qt::blue);
+    }
+
+    if(!(chiuse==0)){
+        QPieSlice *slice1 = series->slices().at(1);
+        slice1->setExploded(true);
+        slice1->setLabelVisible(true);
+        slice1->setPen(QPen(Qt::darkGreen, 2));
+        slice1->setBrush(Qt::red);
+    }
+
+    if(!(esercizi==0)){
+        QPieSlice *slice2 = series->slices().at(2);
+        slice2->setExploded(true);
+        slice2->setLabelVisible(true);
+        slice2->setPen(QPen(Qt::darkGreen, 2));
+        slice2->setBrush(Qt::yellow);
+    }
 
     esChart = new QChart();
     esChart->addSeries(series);
-    esChart->setTitle("Distribuzione quesiti prova scritta");
+    esChart->setTitle("Distribuzione quesiti prova scritta: "+title);
 
 
     esChartView = new QChartView(esChart);
@@ -224,11 +269,6 @@ void userView::createEsChart(float aperte, float chiuse, float esercizi){
 }
 
 void userView::destroyChartsBase(){
-    /*barChart->hide();
-    esChart->hide();
-    passChart->hide();
-    votiChart->hide();
-    durataChart->hide();*/
     chartLayout->removeWidget(passChartView);
     delete passChartView;
     chartLayout->removeWidget(votiChartView);
@@ -251,13 +291,14 @@ void userView::destroyChartsScritti(){
 void userView::createInsertField(){
     addEsameButton=new QPushButton("Aggiungi un esito", this);
     organizzaEsamiButton=new QPushButton("Elimina/Modifica esami", this);
+    QSpacerItem* spazio=new QSpacerItem(10,150);
     QLabel*matricolaLabel=new QLabel("inserisci matricola:", this);
     QLabel*votoLabel=new QLabel("inserisci il voto:", this);
     QLabel*appelloLabel=new QLabel("inserisci l'appello:", this);
     QLabel*dateLabel=new QLabel("inserisci la data dell'esame:", this);
-    QLabel*chiuseLabel=new QLabel("inserisci il numero di domande chiuse:", this);
-    QLabel*aperteLabel=new QLabel("inserisci il numero di domande aperte:", this);
-    QLabel*eserciziLabel=new QLabel("inserisci il numero di esercizi:", this);
+    QLabel*chiuseLabel=new QLabel("inserisci il numero di domande chiuse: \n (se è un esame scritto)", this);
+    QLabel*aperteLabel=new QLabel("inserisci il numero di domande aperte: \n (se è un esame scritto)", this);
+    QLabel*eserciziLabel=new QLabel("inserisci il numero di esercizi: \n (se è un esame scritto)", this);
     QLabel*durataLabel=new QLabel("inserisci la durata(se è un esame orale):", this);
 
     matricolaField=new QSpinBox;
@@ -274,8 +315,9 @@ void userView::createInsertField(){
     eserciziField=new QSpinBox(this);
     durataField=new QSpinBox(this);
 
-    fieldLayout->addWidget(addEsameButton, Qt::AlignCenter);
     fieldLayout->addWidget(organizzaEsamiButton, Qt::AlignCenter);
+    fieldLayout->addSpacerItem(spazio);
+    fieldLayout->addWidget(addEsameButton, Qt::AlignCenter);
     fieldLayout->addWidget(matricolaLabel);
     fieldLayout->addWidget(matricolaField);
     fieldLayout->addWidget(votoLabel);
@@ -308,7 +350,7 @@ void userView::addCorso(QString title){
     connect(corsiVec[i]->getModificaButton(),
             &QPushButton::clicked,
             ctrl,
-            [=]() { emit modCorso(corsiVec[corsiVec.size()-1]->getNumeroCorso()); });
+            [=]() { emit modCorso(i);});
 
     connect(corsiVec[i]->getDeleteButton(),
             &QPushButton::clicked,
@@ -320,7 +362,7 @@ void userView::removeCorso(int posizione){
     delete corsiVec[posizione];
     corsiVec.erase(corsiVec.begin()+posizione);
 
-    for(unsigned int i=0; corsiVec.size()>i; i++){
+    for(unsigned int i=posizione; corsiVec.size()>i; i++){
 
         disconnect(corsiVec[i]->getCorsoButton(),0,0,0);
         disconnect(corsiVec[i]->getDeleteButton(),0,0,0);
@@ -339,7 +381,7 @@ void userView::removeCorso(int posizione){
         connect(corsiVec[i]->getDeleteButton(),
                 &QPushButton::clicked,
                 ctrl,
-                [=]() { emit deleteCorso(corsiVec[i]->getNumeroCorso()); std::cout<<"nuova connect: "<<i ;});
+                [=]() { emit deleteCorso(corsiVec[i]->getNumeroCorso());});
     }
 }
 
@@ -359,14 +401,10 @@ std::vector<corsoPButton*> userView::getCorsoVector(){
 }
 
 void userView::connectViewSignals() const{
-    //connect(addEsameButton, SIGNAL(clicked()), ctrl, SLOT(insertEsame(int matricolaField->value(), int votoField->value(),
-            //int appelloField->value(), QDate dateField->value(), int chiuseField->value(), int aperteField->value(),
-            //int eserciziField->value(), int durataField->value())));
     connect(salvaModello, SIGNAL(clicked()), ctrl, SLOT(onSave()));
     connect(salvaCome, SIGNAL(clicked()), ctrl, SLOT(onSaveAs()));
     connect(addCorsoButton, SIGNAL(clicked()), ctrl, SLOT(onInsertCorso()));
-    //connect(aggiornaButton, SIGNAL(clicked()), ctrl, SLOT(onShowChart()));
-    connect(organizzaEsamiButton, SIGNAL(clicked()), ctrl, SLOT(onOrganizzaEsami())); //CONNETTERE organizzaEsamiButton
+    connect(organizzaEsamiButton, SIGNAL(clicked()), ctrl, SLOT(onOrganizzaEsami()));
     connect(addEsameButton, &QPushButton::clicked,ctrl,[this](){emit insertEsame(matricolaField->value(), votoField->value(), appelloField->value(),
                                                                                  dateField->date(), chiuseField->value(), aperteField->value(),
                                                                                  eserciziField->value(), durataField->value());});

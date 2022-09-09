@@ -5,6 +5,7 @@
 #include <view/view.h>
 #include <QLayout>
 #include <QPushButton>
+#include <QLabel>
 
 
 class introView: public View

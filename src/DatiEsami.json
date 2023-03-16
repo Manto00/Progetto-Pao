@@ -1,0 +1,407 @@
+{
+    "corsi": [
+        {
+            "esami": [
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 15
+                },
+                {
+                    "appello": 2,
+                    "data": "04/04/2021",
+                    "matricola": 1333346,
+                    "voto": 16
+                },
+                {
+                    "appello": 3,
+                    "data": "04/04/2021",
+                    "matricola": 6216746,
+                    "voto": 3
+                },
+                {
+                    "appello": 4,
+                    "data": "04/04/2021",
+                    "matricola": 7216746,
+                    "voto": 0
+                }
+            ],
+            "esami orali": [
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "durata": 10,
+                    "matricola": 1216746,
+                    "voto": 3
+                },
+                {
+                    "appello": 4,
+                    "data": "04/04/2021",
+                    "durata": 10,
+                    "matricola": 1216746,
+                    "voto": 2
+                },
+                {
+                    "appello": 5,
+                    "data": "04/04/2021",
+                    "durata": 10,
+                    "matricola": 1216746,
+                    "voto": 1
+                },
+                {
+                    "appello": 5,
+                    "data": "04/04/2021",
+                    "durata": 10,
+                    "matricola": 1216746,
+                    "voto": 0
+                }
+            ],
+            "esami scritti": [
+                {
+                    "aperte": 2,
+                    "appello": 5,
+                    "chiuse": 7,
+                    "data": "04/04/2019",
+                    "esercizi": 0,
+                    "matricola": 1216746,
+                    "voto": 24
+                },
+                {
+                    "aperte": 0,
+                    "appello": 1,
+                    "chiuse": 5,
+                    "data": "04/04/2022",
+                    "esercizi": 6,
+                    "matricola": 1216746,
+                    "voto": 11
+                },
+                {
+                    "aperte": 10,
+                    "appello": 2,
+                    "chiuse": 1,
+                    "data": "04/04/2021",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 15
+                },
+                {
+                    "aperte": 1,
+                    "appello": 1,
+                    "chiuse": 1,
+                    "data": "04/04/2021",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 27
+                },
+                {
+                    "aperte": 1,
+                    "appello": 1,
+                    "chiuse": 1,
+                    "data": "04/04/2021",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 28
+                },
+                {
+                    "aperte": 3,
+                    "appello": 2,
+                    "chiuse": 1,
+                    "data": "01/01/2022",
+                    "esercizi": 1,
+                    "matricola": 34465,
+                    "voto": 20
+                },
+                {
+                    "aperte": 1,
+                    "appello": 1,
+                    "chiuse": 1,
+                    "data": "04/04/2021",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 28
+                },
+                {
+                    "aperte": 1,
+                    "appello": 1,
+                    "chiuse": 1,
+                    "data": "04/04/2018",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 28
+                },
+                {
+                    "aperte": 1,
+                    "appello": 1,
+                    "chiuse": 1,
+                    "data": "04/04/2022",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 28
+                },
+                {
+                    "aperte": 5,
+                    "appello": 3,
+                    "chiuse": 9,
+                    "data": "04/04/2020",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 30
+                },
+                {
+                    "aperte": 22,
+                    "appello": 1,
+                    "chiuse": 10,
+                    "data": "04/04/2022",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 1
+                },
+                {
+                    "aperte": 1,
+                    "appello": 1,
+                    "chiuse": 7,
+                    "data": "04/04/2019",
+                    "esercizi": 1,
+                    "matricola": 1216746,
+                    "voto": 28
+                },
+                {
+                    "aperte": 1,
+                    "appello": 5,
+                    "chiuse": 1,
+                    "data": "04/04/2021",
+                    "esercizi": 3,
+                    "matricola": 1216746,
+                    "voto": 18
+                }
+            ],
+            "nome": "Programmazione ad oggetti"
+        },
+        {
+            "esami": [
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 21
+                }
+            ],
+            "esami orali": [
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "durata": 26,
+                    "matricola": 1216746,
+                    "voto": 13
+                },
+                {
+                    "appello": 3,
+                    "data": "04/04/2018",
+                    "durata": 20,
+                    "matricola": 1216746,
+                    "voto": 30
+                },
+                {
+                    "appello": 4,
+                    "data": "04/04/2019",
+                    "durata": 34,
+                    "matricola": 1216746,
+                    "voto": 29
+                },
+                {
+                    "appello": 5,
+                    "data": "04/04/2020",
+                    "durata": 27,
+                    "matricola": 1216746,
+                    "voto": 0
+                },
+                {
+                    "appello": 5,
+                    "data": "04/04/2022",
+                    "durata": 19,
+                    "matricola": 1216746,
+                    "voto": 15
+                },
+                {
+                    "appello": 5,
+                    "data": "04/04/2022",
+                    "durata": 20,
+                    "matricola": 1216746,
+                    "voto": 23
+                },
+                {
+                    "appello": 4,
+                    "data": "04/04/2022",
+                    "durata": 20,
+                    "matricola": 1216746,
+                    "voto": 23
+                },
+                {
+                    "appello": 2,
+                    "data": "04/04/2019",
+                    "durata": 24,
+                    "matricola": 1216746,
+                    "voto": 23
+                },
+                {
+                    "appello": 3,
+                    "data": "04/04/2018",
+                    "durata": 22,
+                    "matricola": 1216746,
+                    "voto": 26
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2018",
+                    "durata": 19,
+                    "matricola": 1216746,
+                    "voto": 14
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2019",
+                    "durata": 16,
+                    "matricola": 1216746,
+                    "voto": 10
+                },
+                {
+                    "appello": 2,
+                    "data": "04/04/2022",
+                    "durata": 25,
+                    "matricola": 1216746,
+                    "voto": 3
+                },
+                {
+                    "appello": 4,
+                    "data": "04/04/2020",
+                    "durata": 20,
+                    "matricola": 1216746,
+                    "voto": 6
+                },
+                {
+                    "appello": 4,
+                    "data": "04/04/2020",
+                    "durata": 40,
+                    "matricola": 1216746,
+                    "voto": 15
+                }
+            ],
+            "esami scritti": [
+            ],
+            "nome": "Calcolo numerico"
+        },
+        {
+            "esami": [
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 21
+                }
+            ],
+            "esami orali": [
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "durata": 10,
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "durata": 10,
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "durata": 10,
+                    "matricola": 1216746,
+                    "voto": 21
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2021",
+                    "durata": 10,
+                    "matricola": 1216746,
+                    "voto": 21
+                }
+            ],
+            "esami scritti": [
+            ],
+            "nome": "Basi di Dati"
+        },
+        {
+            "esami": [
+                {
+                    "appello": 2,
+                    "data": "04/04/2022",
+                    "matricola": 1216746,
+                    "voto": 20
+                },
+                {
+                    "appello": 1,
+                    "data": "04/04/2022",
+                    "matricola": 1216746,
+                    "voto": 29
+                },
+                {
+                    "appello": 4,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 19
+                },
+                {
+                    "appello": 4,
+                    "data": "04/04/2021",
+                    "matricola": 1216746,
+                    "voto": 15
+                }
+            ],
+            "esami orali": [
+            ],
+            "esami scritti": [
+            ],
+            "nome": "Automi e linguaggi formali"
+        }
+    ]
+}

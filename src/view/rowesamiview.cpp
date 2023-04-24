@@ -1,7 +1,7 @@
 #include "rowesamiview.h"
 #include "controller/controller.h"
 
-rowEsamiView::rowEsamiView(const QSize& s,View* parent): View(s, parent)
+rowEsamiView::rowEsamiView(const QSize& s,View* parent)
 {
     mainLayout=new QHBoxLayout(this);
 
@@ -65,7 +65,6 @@ void rowEsamiView::createRow(int esame, int mat, int vot, int app, QDate date, i
 }
 
 void rowEsamiView::setController(Controller *c){
-    ctrl=c;
     connectViewSignals();
 }
 

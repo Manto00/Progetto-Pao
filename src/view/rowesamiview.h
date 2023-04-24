@@ -7,7 +7,7 @@
 #include <QBoxLayout>
 #include <QPushButton>
 
-class rowEsamiView: public View
+class rowEsamiView: public QWidget
 {
     Q_OBJECT
 private:
@@ -24,7 +24,7 @@ private:
     QSpinBox* durata;
     int numeroEsame;
 
-    void connectViewSignals() const override;
+    void connectViewSignals() const;
 
 public:
     rowEsamiView(const QSize& s = QSize(),View* parent = nullptr);
@@ -33,7 +33,7 @@ public:
 
     void createRow(int esame, int mat, int vot, int app, QDate date, int chi=0, int ape=0, int ese=0, int dur=0);
 
-    virtual void setController(Controller*c) override;
+    virtual void setController(Controller*c);
 
     QPushButton*getSaveButton()const;
 
